@@ -9,6 +9,7 @@ describe "User views homepage" do
   end
 
   it "and sees a list of warehouses" do
+    
     Warehouse.create!(name: "Galpão 1", code: "ABC", city: "Cidade 1" , area: 10_000)
     Warehouse.create!(name: "Galpão 2", code: "DEF", city: "Cidade 2" , area: 20_000)
 
@@ -27,6 +28,7 @@ describe "User views homepage" do
   end
 
   it "and sees a message if there are no warehouses" do
+
     visit root_path
 
     expect(page).to have_content("Nenhum galpão cadastrado")

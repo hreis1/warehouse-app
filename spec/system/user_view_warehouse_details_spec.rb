@@ -17,6 +17,7 @@ describe "User views warehouse details" do
   end
 
   it 'and return to home page' do
+    
     Warehouse.create!(name: "Galpão 1", code: "ABC", city: "Cidade 1" , area: 10_000, address: "Rua 1, 123", cep: "12345-123", description:"Galpão com 10.000 m² de área total, sendo 8.000 m² de área de armazenagem e 2.000 m² de área administrativa.")
 
     visit root_path
