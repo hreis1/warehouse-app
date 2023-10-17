@@ -10,8 +10,8 @@ describe "User views homepage" do
 
   it "and sees a list of warehouses" do
     
-    Warehouse.create!(name: "Galpão 1", code: "ABC", city: "Cidade 1" , area: 10_000)
-    Warehouse.create!(name: "Galpão 2", code: "DEF", city: "Cidade 2" , area: 20_000)
+    Warehouse.create!(name: "Galpão 1", code: "ABC", city: "Cidade 1" , area: 10_000, address: "Rua A, 100", cep: "00000-000", description: "Galpão com 1000m²")
+    Warehouse.create!(name: "Galpão 2", code: "DEF", city: "Cidade 2" , area: 20_000, address: "Rua B, 200", cep: "11111-111", description: "Galpão com 2000m²")
 
     visit root_path
 
