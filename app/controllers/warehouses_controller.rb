@@ -16,4 +16,18 @@ class WarehousesController < ApplicationController
     flash.now[:notice] = "Galpão não cadastrado"
     render :new
   end
+
+  def edit
+    @warehouse = Warehouse.find(params[:id])
+  end
+
+  def update
+    warehouse_params = params.require(:warehouse).permit(:name, :code, :city, :area, :address, :cep, :description)
+    @warehouse = Warehouse.find(params[:id])
+    if @warehouse.update(warehouse_params)
+      return redirect_to warehouse_path(@warehouse), notice: "Galpão atualizado com sucesso!"
+    end
+    flash.now[:notice] = "Galpão não atualizado"
+    render :edit
+  end
 end
