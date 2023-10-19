@@ -1,14 +1,13 @@
 class WarehousesController < ApplicationController
-  def show
-    @warehouse = Warehouse.find(params[:id])
-  end
+  before_action :set_warehouse, only: [:show, :edit, :update]
+
+  def show; end
 
   def new
     @warehouse = Warehouse.new
   end
 
   def create
-    warehouse_params = params.require(:warehouse).permit(:name, :code, :city, :area, :address, :cep, :description)
     @warehouse = Warehouse.new(warehouse_params)
     if @warehouse.save
       return redirect_to root_path, notice: "Galpão cadastrado com sucesso!"
@@ -17,17 +16,23 @@ class WarehousesController < ApplicationController
     render :new
   end
 
-  def edit
-    @warehouse = Warehouse.find(params[:id])
-  end
+  def edit; end
 
   def update
-    warehouse_params = params.require(:warehouse).permit(:name, :code, :city, :area, :address, :cep, :description)
-    @warehouse = Warehouse.find(params[:id])
     if @warehouse.update(warehouse_params)
       return redirect_to warehouse_path(@warehouse), notice: "Galpão atualizado com sucesso!"
     end
     flash.now[:notice] = "Galpão não atualizado"
     render :edit
+  end
+
+  private
+
+  def set_warehouse
+    @warehouse = Warehouse.find(params[:id])
+  end
+
+  def warehouse_params
+    params.require(:warehouse).permit(:name, :code, :city, :area, :address, :cep, :description)
   end
 end
