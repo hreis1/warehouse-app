@@ -14,7 +14,7 @@ describe "Warehouse registration" do
     expect(page).to have_field("Endereço")
     expect(page).to have_field("CEP")
     expect(page).to have_field("Descrição")
-    expect(page).to have_button("Cadastrar")
+    expect(page).to have_button("Criar Galpão")
   end
   
   it "successfully" do
@@ -30,7 +30,7 @@ describe "Warehouse registration" do
     fill_in "CEP", with: "00000-000"
     fill_in "Descrição", with: "Galpão com 1000m²"
 
-    click_on "Cadastrar"
+    click_on "Criar Galpão"
 
     expect(page).to have_content("Galpão cadastrado com sucesso!")
     expect(current_path).to eq root_path
@@ -53,8 +53,15 @@ describe "Warehouse registration" do
     fill_in "CEP", with: ""
     fill_in "Descrição", with: ""
 
-    click_on "Cadastrar"
+    click_on "Criar Galpão"
 
     expect(page).to have_content("Galpão não cadastrado")
+    expect(page).to have_content("Nome não pode ficar em branco")
+    expect(page).to have_content("Código não pode ficar em branco")
+    expect(page).to have_content("Cidade não pode ficar em branco")
+    expect(page).to have_content("Área não pode ficar em branco")
+    expect(page).to have_content("Endereço não pode ficar em branco")
+    expect(page).to have_content("CEP não pode ficar em branco")
+    expect(page).to have_content("Descrição não pode ficar em branco")
   end
 end
