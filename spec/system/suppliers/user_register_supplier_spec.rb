@@ -31,7 +31,7 @@ describe "User registers supplier" do
     fill_in "Estado", with: "AB"
     fill_in "Email", with: "contato@abc.com"
 
-    click_on "Criar Fornecedor"
+    click_on "Cadastrar Fornecedor"
 
     expect(current_path).to eq supplier_path(Supplier.last.id)
     expect(page).to have_content("Fornecedor cadastrado com sucesso")
@@ -55,7 +55,7 @@ describe "User registers supplier" do
     fill_in "Estado", with: ""
     fill_in "Email", with: ""
 
-    click_on "Criar Fornecedor"
+    click_on "Cadastrar Fornecedor"
 
     expect(page).to have_content("Razão Social não pode ficar em branco")
     expect(page).to have_content("Nome Fantasia não pode ficar em branco")
