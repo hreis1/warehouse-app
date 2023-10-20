@@ -1,8 +1,21 @@
 require "rails_helper"
 
 describe "User view product models" do
+  it "if logged in" do
+
+    visit root_path
+    within "nav" do
+      click_on "Modelos de Produtos"
+    end
+
+    expect(current_path).to eq(new_user_session_path)
+    expect(page).to have_content("Para continuar, faça login ou registre-se.")
+  end
+
   it "from home page" do
-    
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
     visit root_path
     within "nav" do
       click_on "Modelos de Produtos"
@@ -12,6 +25,9 @@ describe "User view product models" do
   end
 
   it "successfully" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
     Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com")
     Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891012", full_address: "Rua das Flores, 789", city: "Cidade 3", state: "EF", email: "contato@samsung.com")
 
@@ -34,6 +50,8 @@ describe "User view product models" do
   end
 
   it "and sees message if there is no product model" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
     
     visit root_path
     within "nav" do

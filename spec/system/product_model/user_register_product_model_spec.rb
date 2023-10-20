@@ -1,7 +1,18 @@
 require "rails_helper"
 
 describe "User register product model" do
+  it "if logged in" do
+
+    visit new_product_model_path
+
+    expect(current_path).to eq(new_user_session_path)
+    expect(page).to have_content("Para continuar, faça login ou registre-se.")
+  end
+
   it "successfully" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
     Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com")
     Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@samsung.com")
     
@@ -29,6 +40,8 @@ describe "User register product model" do
   end
 
   it "and must fill in all fields" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
 
     visit root_path
     click_on "Modelos de Produtos"
