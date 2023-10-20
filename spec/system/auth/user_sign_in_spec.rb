@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe 'User sign in' do
   it 'successfully' do
-    User.create!(email:'joao@email.com', password: '123456')
+    User.create!(name:'João', email:'joao@email.com', password: '123456')
 
     visit root_path
     click_on 'Entrar'
@@ -21,7 +21,7 @@ describe 'User sign in' do
   end
 
   it 'and logout' do
-    User.create!(email:'joao@email.com', password:'123456')
+    User.create!(name:'João', email:'joao@email.com', password:'123456')
 
     visit root_path
     click_on 'Entrar'
