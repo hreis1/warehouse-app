@@ -1,6 +1,10 @@
 <section id="product_models">
   <h2>Modelos de Produtos</h2>
 
+  <div>
+    <%= link_to "Cadastrar Modelo de Produto", new_product_model_path %>
+  </div>
+
   <% if @product_models.any? %>
     <table>
       <thead>
@@ -11,11 +15,11 @@
         </tr>
       </thead>
       <tbody>
-        <% @product_models.each do |product_model| %>
+        <% @product_models.each do |pm| %>
           <tr>
-            <td><%= product_model.name %></td>
-            <td><%= product_model.sku %></td>
-            <td><%= product_model.supplier.corporate_name %></td>
+            <td><%= link_to pm.name, pm %></td>
+            <td><%= pm.sku %></td>
+            <td><%= pm.supplier.corporate_name %></td>
           </tr>
         <% end %>
       </tbody>
