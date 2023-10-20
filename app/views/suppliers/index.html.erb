@@ -1,24 +1,28 @@
-<h1>Fornecedores</h1>
+<section id="suppliers">
+  <h2>Fornecedores</h2>
 
-<% if @suppliers.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>Localização</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @suppliers.each do |s| %>
+  <div>
+    <%= link_to 'Cadastrar fornecedor', new_supplier_path %>
+  </div>
+
+  <% if @suppliers.any? %>
+    <table>
+      <thead>
         <tr>
-          <td><%= link_to s.brand_name, s %></td>
-          <td><%= s.city %> - <%= s.state %></td>
+          <th>Nome</th>
+          <th>Localização</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>Nenhum fornecedor cadastrado</p>
-<% end %>
-
-<%= link_to "Cadastrar fornecedor", new_supplier_path %>
+      </thead>
+      <tbody>
+        <% @suppliers.each do |s| %>
+          <tr>
+            <td><%= link_to s.brand_name, s %></td>
+            <td><%= s.city %> - <%= s.state %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>Nenhum fornecedor cadastrado</p>
+  <% end %>
+</section>
