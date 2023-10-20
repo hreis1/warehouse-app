@@ -13,3 +13,8 @@ Warehouse.create!(name: "Galpão 3", code: "GHI", city: "Cidade 3" , area: 30_00
 Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com")
 Supplier.create!(corporate_name: "Fornecedor DEF", brand_name: "DEF", registration_number: "1234567891012", full_address: "Rua das Palmeiras, 123", city: "Cidade 2", state: "CD", email: "contato@def.com")
 Supplier.create!(corporate_name: "Fornecedor GHI", brand_name: "GHI", registration_number: "1234567891013", full_address: "Rua das Tulipas, 123", city: "Cidade 3", state: "EF", email: "contato@ghi.com")
+
+apple = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891012", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com")
+samsung = Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891013", full_address: "Rua das Flores, 789", city: "Cidade 3", state: "EF", email: "contato@samsung.com")
+ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 8,sku: "IPHONE-123" ,supplier: apple)
+ProductModel.create!(name: "S10", weight: 157, height: 70, width: 150, depth: 7,sku: "SAMSUNG-123" ,supplier: samsung)
