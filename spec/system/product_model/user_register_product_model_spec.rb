@@ -3,6 +3,7 @@ require "rails_helper"
 describe "User register product model" do
   it "successfully" do
     Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com")
+    Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@samsung.com")
     
     visit root_path
     click_on "Modelos de Produtos"
