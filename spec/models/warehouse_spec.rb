@@ -62,9 +62,27 @@ RSpec.describe Warehouse, type: :model do
       end
     end
 
+    it 'false when name is not unique' do
+      Warehouse.create!(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+      warehouse = Warehouse.new(name: 'Galpão A', code: 'DEF', city: 'Cidade B', area: '2000', address: 'Rua B', cep: '87654321', description: 'Galpão com 2000m²')
+      expect(warehouse).not_to be_valid
+    end
+
     it 'false when area is not a number' do
       warehouse = Warehouse.new(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: 'mil', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
       expect(warehouse).not_to be_valid
+    end
+
+    context 'when cep is not in the format 12345-678 or 12345678' do
+      it 'false when cep is not in the format 12345-678' do
+        warehouse = Warehouse.new(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345.678', description: 'Galpão com 1000m²')
+        expect(warehouse).not_to be_valid
+      end
+      
+      it 'false when cep is not in the format 12345678' do
+        warehouse = Warehouse.new(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '1234567', description: 'Galpão com 1000m²')
+        expect(warehouse).not_to be_valid
+      end
     end
   end
 end
