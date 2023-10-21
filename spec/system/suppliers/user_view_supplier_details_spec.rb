@@ -40,4 +40,44 @@ describe "User views supplier details" do
 
     expect(current_path).to eq suppliers_path
   end
+
+  it "and sees products from supplier" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com", phone: "11999999999")
+    Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891012", full_address: "Rua das Flores, 789", city: "Cidade 3", state: "EF", email: "contato@samsung.com", phone: "21999999999")
+
+    ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 1,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: Supplier.first)
+    ProductModel.create!(name: "S10", weight: 157, height: 70, width: 150, depth: 1,sku: "SAMSUNGABCDEFGHIJKLM" ,supplier: Supplier.last)
+
+    visit root_path
+    click_on "Fornecedores"
+    click_on "Apple"
+
+    expect(current_path).to eq supplier_path(Supplier.first)
+    expect(page).to have_content("Modelos de Produtos")
+    expect(page).to have_content("Nome: Iphone 11")
+    expect(page).to have_content("Dimensões: 150cm x 75cm x 1cm")
+    expect(page).to have_content("Peso: 194g")
+    expect(page).to have_content("SKU: IPHONEABCDEFGHIJKLNM")
+    expect(page).not_to have_content("Nome: S10")
+    expect(page).not_to have_content("Dimensões: 70cm x 150cm x 1cm")
+    expect(page).not_to have_content("Peso: 157g")
+    expect(page).not_to have_content("SKU: SAMSUNGABCDEFGHIJKLM")
+  end
+  
+  it "and sees no products from supplier" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+    Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com" , phone: "11999999999")
+
+    visit root_path
+    click_on "Fornecedores"
+    click_on "Apple"
+
+    expect(current_path).to eq supplier_path(Supplier.first)
+    expect(page).to have_content("Modelos de Produtos")
+    expect(page).to have_content("Nenhum modelo de produto cadastrado")
+  end
 end

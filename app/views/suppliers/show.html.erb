@@ -18,3 +18,23 @@
   <%= link_to "Editar", edit_supplier_path(@supplier) %>
   <%= link_to "Voltar", suppliers_path %>
 </div>
+
+<section id="product_models">
+  <% if @product_models.any? %>
+    <h2>Modelos de Produtos</h2>
+    <% @product_models.each do |pm| %>
+      <dl>
+        <dt>Nome:</dt>
+        <dd><%= link_to pm.name, pm %></dd>
+        <dt>Dimensões:</dt>
+        <dd><%= "#{pm.height}cm x #{pm.width}cm x #{pm.depth}cm" %></dd>
+        <dt>Peso:</dt>
+        <dd><%= "#{pm.weight}g" %></dd>
+        <dt>SKU:</dt>
+        <dd><%= pm.sku %></dd>
+      </dl>
+    <% end %>
+  <% else %>
+    <p>Nenhum modelo de produto cadastrado</p>
+  <% end %>
+</section>
