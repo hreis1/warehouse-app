@@ -5,7 +5,7 @@ describe "User views homepage" do
     
     visit root_path
 
-    expect(page).to have_content("Galpões & Estoque")
+    expect(page).to have_content("Sistema de Galpões e Estoque")
   end
 
   it "and sees a list of warehouses" do
