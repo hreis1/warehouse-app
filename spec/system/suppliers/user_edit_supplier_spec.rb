@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "User edits supplier" do
   it "from home page" do
-    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com")
+    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
 
     visit root_path
     click_on "Fornecedores"
@@ -16,11 +16,12 @@ describe "User edits supplier" do
     expect(page).to have_field("Cidade", with: "Cidade 1")
     expect(page).to have_field("Estado", with: "AB")
     expect(page).to have_field("Email", with: "contato@abc.com")
+    expect(page).to have_field("Telefone", with: "11999999999")
     expect(page).to have_button("Atualizar Fornecedor")
   end
 
   it "successfully" do
-    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com")
+    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
 
     visit root_path
     click_on "Fornecedores"
@@ -34,6 +35,7 @@ describe "User edits supplier" do
     fill_in "Cidade", with: "Cidade 2"
     fill_in "Estado", with: "CD"
     fill_in "Email", with: "contato@cd.com"
+    fill_in "Telefone", with: "11999999999"
     click_on "Atualizar Fornecedor"
 
     expect(current_path).to eq(supplier_path(Supplier.last))
@@ -45,10 +47,11 @@ describe "User edits supplier" do
     expect(page).to have_content("Cidade 2")
     expect(page).to have_content("CD")
     expect(page).to have_content("contato@cd.com")
+    expect(page).to have_content("11999999999")
   end
 
   it "and attributes cannot be blank" do
-    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com")
+    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
 
     visit root_path
     click_on "Fornecedores"
@@ -62,6 +65,7 @@ describe "User edits supplier" do
     fill_in "Cidade", with: ""
     fill_in "Estado", with: ""
     fill_in "Email", with: ""
+    fill_in "Telefone", with: ""
     click_on "Atualizar Fornecedor"
 
     expect(page).to have_content("Não foi possível atualizar o fornecedor")
@@ -72,5 +76,6 @@ describe "User edits supplier" do
     expect(page).to have_content("Cidade não pode ficar em branco")
     expect(page).to have_content("Estado não pode ficar em branco")
     expect(page).to have_content("Email não pode ficar em branco")
+    expect(page).to have_content("Telefone não pode ficar em branco")
   end
 end

@@ -28,8 +28,8 @@ describe "User view product models" do
     user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
     login_as(user)
 
-    Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com")
-    Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891012", full_address: "Rua das Flores, 789", city: "Cidade 3", state: "EF", email: "contato@samsung.com")
+    Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 2", state: "CD", email: "contato@apple.com", phone: "11999999999")
+    Supplier.create!(corporate_name: "Samsung", brand_name: "Samsung", registration_number: "1234567891012", full_address: "Rua das Flores, 789", city: "Cidade 3", state: "EF", email: "contato@samsung.com", phone: "21999999999")
 
     ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 8,sku: "IPHONE-123" ,supplier: Supplier.first)
     ProductModel.create!(name: "S10", weight: 157, height: 70, width: 150, depth: 7,sku: "SAMSUNG-123" ,supplier: Supplier.last)

@@ -30,6 +30,7 @@ describe "User registers supplier" do
     fill_in "Cidade", with: "Cidade 1"
     fill_in "Estado", with: "AB"
     fill_in "Email", with: "contato@abc.com"
+    fill_in "Telefone", with: "11999999999"
 
     click_on "Cadastrar Fornecedor"
 
@@ -39,6 +40,7 @@ describe "User registers supplier" do
     expect(page).to have_content("Documento: 1234567891011")
     expect(page).to have_content("Endereço: Rua das Flores, 123 - Cidade 1 - AB")
     expect(page).to have_content("Email: contato@abc.com")
+    expect(page).to have_content("Telefone: 11999999999")
   end
 
   it "and attributes must be filled" do
@@ -54,6 +56,7 @@ describe "User registers supplier" do
     fill_in "Cidade", with: ""
     fill_in "Estado", with: ""
     fill_in "Email", with: ""
+    fill_in "Telefone", with: ""
 
     click_on "Cadastrar Fornecedor"
 
@@ -64,5 +67,6 @@ describe "User registers supplier" do
     expect(page).to have_content("Cidade não pode ficar em branco")
     expect(page).to have_content("Estado não pode ficar em branco")
     expect(page).to have_content("Email não pode ficar em branco")
+    expect(page).to have_content("Telefone não pode ficar em branco")
   end
 end
