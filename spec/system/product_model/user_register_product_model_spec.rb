@@ -24,14 +24,14 @@ describe "User register product model" do
     fill_in "Altura", with: "150"
     fill_in "Largura", with: "75"
     fill_in "Profundidade", with: "8"
-    fill_in "SKU", with: "IPHONE-123"
+    fill_in "SKU", with: "IPHONEABCDEFGHIJKLNM"
     select "Apple", from: "Fornecedor"
     click_on "Cadastrar Modelo de Produto"
 
     expect(current_path).to eq(product_model_path(ProductModel.last))
     expect(page).to have_content("Modelo de Produto cadastrado com sucesso")
     expect(page).to have_content("Iphone 11")
-    expect(page).to have_content("SKU: IPHONE-123")
+    expect(page).to have_content("SKU: IPHONEABCDEFGHIJKLNM")
     expect(page).to have_content("Dimensões: 150cm x 75cm x 8cm")
     expect(page).to have_content("Peso: 194g")
     expect(page).to have_content("Fornecedor: Apple")
