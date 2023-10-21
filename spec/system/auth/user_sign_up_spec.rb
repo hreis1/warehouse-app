@@ -4,7 +4,6 @@ describe 'User sign up' do
   it 'successfully' do
 
     visit root_path
-    click_on 'Entrar'
     click_on 'Criar conta'
 
     fill_in 'Nome', with: 'Maria'
@@ -24,7 +23,6 @@ describe 'User sign up' do
   it 'and must fill all fields' do
 
     visit root_path
-    click_on 'Entrar'
     click_on 'Criar conta'
     fill_in 'Nome', with: ''
     fill_in 'E-mail', with: ''

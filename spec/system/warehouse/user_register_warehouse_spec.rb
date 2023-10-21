@@ -1,7 +1,16 @@
 require "rails_helper"
 
 describe "Warehouse registration" do
+  it "if logged in" do
+    visit new_warehouse_path
+
+    expect(current_path).to eq new_user_session_path
+    expect(page).to have_content("Para continuar, faça login ou registre-se.")
+  end
+  
   it "from home page" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
 
     visit root_path
     click_on "Cadastrar Galpão"
@@ -18,6 +27,8 @@ describe "Warehouse registration" do
   end
   
   it "successfully" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
 
     visit root_path
     click_on "Cadastrar Galpão"
@@ -41,6 +52,8 @@ describe "Warehouse registration" do
   end
 
   it "and must fill in all fields" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
 
     visit root_path
     click_on "Cadastrar Galpão"

@@ -1,7 +1,18 @@
 require "rails_helper"
 
 describe "User edits supplier" do
+  it 'if logged in' do
+    Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
+
+    visit edit_supplier_path(Supplier.last)
+    
+    expect(current_path).to eq new_user_session_path
+    expect(page).to have_content("Para continuar, faça login ou registre-se.")
+  end
+
   it "from home page" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
     Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
 
     visit root_path
@@ -21,6 +32,8 @@ describe "User edits supplier" do
   end
 
   it "successfully" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
     Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
 
     visit root_path
@@ -51,6 +64,8 @@ describe "User edits supplier" do
   end
 
   it "and attributes cannot be blank" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
     Supplier.create!(corporate_name: "Fornecedor ABC", brand_name: "ABC", registration_number: "1234567891011", full_address: "Rua das Flores, 123", city: "Cidade 1", state: "AB", email: "contato@abc.com", phone: "11999999999")
 
     visit root_path

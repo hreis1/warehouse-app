@@ -5,7 +5,6 @@ describe 'User sign in' do
     User.create!(name:'João', email:'joao@email.com', password: '123456')
 
     visit root_path
-    click_on 'Entrar'
     fill_in 'E-mail', with: 'joao@email.com'
     fill_in 'Senha', with: '123456'
     within 'form' do
@@ -24,7 +23,6 @@ describe 'User sign in' do
     User.create!(name:'João', email:'joao@email.com', password:'123456')
 
     visit root_path
-    click_on 'Entrar'
     fill_in 'E-mail', with: 'joao@email.com'
     fill_in 'Senha', with: '123456'
     within 'form' do
@@ -32,7 +30,6 @@ describe 'User sign in' do
     end
     click_on "Sair"
 
-    expect(page).to have_content('Logout efetuado com sucesso.')
     expect(page).to have_link('Entrar')
     expect(page).not_to have_button('Sair')
     expect(page).not_to have_content('joao@email.com')
