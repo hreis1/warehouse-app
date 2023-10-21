@@ -39,9 +39,31 @@ RSpec.describe Warehouse, type: :model do
       end
     end
 
-    it 'false when code is not unique' do
-      Warehouse.create!(name: 'Galpão A', code: '123', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
-      warehouse = Warehouse.new(name: 'Galpão B', code: '123', city: 'Cidade B', area: '2000', address: 'Rua B', cep: '87654321', description: 'Galpão com 2000m²')
+    context 'when code is unique, has 3 letters and is entirely composed of uppercase letters' do
+      it 'false when code is not unique' do
+        Warehouse.create!(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+        warehouse = Warehouse.new(name: 'Galpão B', code: 'ABC', city: 'Cidade B', area: '2000', address: 'Rua B', cep: '87654321', description: 'Galpão com 2000m²')
+        expect(warehouse).not_to be_valid
+      end
+
+      it 'false when code length is different from 3' do
+        warehouse = Warehouse.new(name: 'Galpão A', code: 'ABCD', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+        expect(warehouse).not_to be_valid
+      end
+
+      it 'false when code is not entirely composed of uppercase letters' do
+        warehouse = Warehouse.new(name: 'Galpão A', code: 'abc', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+        expect(warehouse).not_to be_valid
+      end
+
+      it 'false when code is not entirely composed of letters' do
+        warehouse = Warehouse.new(name: 'Galpão A', code: 'AB3', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+        expect(warehouse).not_to be_valid
+      end
+    end
+
+    it 'false when area is not a number' do
+      warehouse = Warehouse.new(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: 'mil', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
       expect(warehouse).not_to be_valid
     end
   end
