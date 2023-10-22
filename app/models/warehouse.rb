@@ -5,4 +5,12 @@ class Warehouse < ApplicationRecord
   validates :code, format: { with: /\A[A-Z]+\z/, message: 'somente letras maiúsculas' }
   validates :area, numericality: { only_integer: true }
   validates :cep, format: { with: /\A\d{5}-?\d{3}\z/, message: 'formato inválido' }
+
+  def full_description
+    "#{code} - #{name}"
+  end
+
+  def full_address
+    "#{city} - #{address} - CEP: #{cep}"
+  end
 end

@@ -15,7 +15,7 @@ describe 'User sign in' do
     within 'nav' do
       expect(page).not_to have_link('Entrar')
       expect(page).to have_button('Sair')
-      expect(page).to have_content('joao@email.com')
+      expect(page).to have_content(User.last.description)
     end
   end
 

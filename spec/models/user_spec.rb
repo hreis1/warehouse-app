@@ -7,4 +7,10 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to eq false
     end
   end
+  describe '#description' do
+    it 'returns the name' do
+      user = User.new(name:'John Doe', email:'johnd@email.com')
+      expect(user.description).to eq 'John Doe - johnd@email.com'
+    end
+  end
 end

@@ -85,4 +85,18 @@ RSpec.describe Warehouse, type: :model do
       end
     end
   end
+
+  describe '#full_address' do
+    it 'returns the full address' do
+      warehouse = Warehouse.new(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+      expect(warehouse.full_address).to eq 'Cidade A - Rua A - CEP: 12345678'
+    end
+  end
+
+  describe '#full_description' do
+    it 'returns the full description' do
+      warehouse = Warehouse.new(name: 'Galpão A', code: 'ABC')
+      expect(warehouse.full_description).to eq 'ABC - Galpão A'
+    end
+  end
 end
