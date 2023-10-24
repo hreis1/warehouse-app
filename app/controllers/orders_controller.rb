@@ -14,7 +14,10 @@ class OrdersController < ApplicationController
     if @order.save
       return redirect_to @order, notice: 'Pedido registrado com sucesso!'
     end
-      render :new
+    @suppliers = Supplier.all
+    @warehouses = Warehouse.all
+    flash.now[:alert] = 'Não foi possível registrar o pedido'
+    render :new
   end
 
   def show

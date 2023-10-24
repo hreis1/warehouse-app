@@ -34,4 +34,17 @@ describe 'User register order' do
     expect(page).not_to have_content('Galpão 2')
     expect(page).not_to have_content('Samsung')
   end
+
+  it 'and must fill in all fields' do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    visit root_path
+    click_on 'Registrar Pedido'
+    click_on 'Registrar'
+    
+    expect(current_path).to eq(orders_path)
+    expect(page).to have_content('Verifique os seguintes erros:')
+    expect(page).to have_content('Data de entrega estimada não pode ficar em branco')
+  end
 end

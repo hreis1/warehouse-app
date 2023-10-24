@@ -13,7 +13,7 @@ class WarehousesController < ApplicationController
     if @warehouse.save
       return redirect_to root_path, notice: "Galpão cadastrado com sucesso!"
     end
-    flash.now[:notice] = "Galpão não cadastrado"
+    flash.now[:alert] = "Galpão não cadastrado"
     render :new
   end
 
