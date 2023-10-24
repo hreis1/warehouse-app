@@ -1,25 +1,29 @@
 <section id="warehouses">
-  <h2>Galpões</h2>
-  
-  <div>
-    <%= link_to 'Cadastrar Galpão', new_warehouse_path %>
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+    <h2>Galpões</h2>
+    
+    <div>
+      <%= link_to 'Cadastrar Galpão', new_warehouse_path, class: 'btn btn-primary' %>
+    </div>
   </div>
 
-  <% @warehouses.each do |w| %>
-    <div>
-      <h3><%= link_to w.name, warehouse_path(w) %></h3>
+  <div class="d-flex justify-content-center flex-wrap gap-2">
+    <% @warehouses.each do |w| %>
+      <div class="border" style="width: 24rem">
+        <h3><%= link_to w.name, warehouse_path(w) %></h3>
     
-        <dl>
-          <dt>Código:</dt>
-          <dd><%= w.code %></dd>
-          <dt>Cidade:</dt>
-          <dd><%= w.city %></dd>
-          <dt>Área:</dt>
-          <dd><%= w.area %> m²</dd>
+        <dl class="row ms-4">
+          <dt class="col-3">Código:</dt>
+          <dd class="col-9"><%= w.code %></dd>
+          <dt class="col-3">Cidade:</dt>
+          <dd class="col-9"><%= w.city %></dd>
+          <dt class="col-3">Área:</dt>
+          <dd class="col-9"><%= w.area %> m²</dd>
         </dl>
 
       </div>
     <% end %>
+  </div>
 
   <% if @warehouses.empty? %>
     <p>Nenhum galpão cadastrado</p>
