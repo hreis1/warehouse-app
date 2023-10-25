@@ -1,20 +1,27 @@
 <section id="product_model">
-  <h2>Modelo de Produto</h2>
-  <h3><%= @product_model.name %></h3>
 
-  <dl>
-    <dt>SKU: </dt>
-    <dd><%= @product_model.sku %></dd>
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+    <h2><%= @product_model.name %></h2>
+  </div>
 
-    <dt>Dimensões:</dt>
-    <dd><%= @product_model.height %>cm x <%= @product_model.width %>cm x <%= @product_model.depth %>cm</dd>
-    
-    <dt>Peso: </dt>
-    <dd><%= @product_model.weight %>g</dd>
+  <div class="d-flex justify-content-center m-4 align-items-center">
+    <dl class="mt-4">
+      <dt>SKU: </dt>
+      <dd><%= @product_model.sku %></dd>
 
-    <dt>Fornecedor: </dt>
-    <dd><%= @product_model.supplier.corporate_name %></dd>
-  </dl>
+      <dt>Dimensões:</dt>
+      <dd><%= @product_model.height %>cm x <%= @product_model.width %>cm x <%= @product_model.depth %>cm</dd>
+      
+      <dt>Peso: </dt>
+      <dd><%= @product_model.weight %>g</dd>
 
-  <%= link_to 'Voltar', :back %>
+      <dt>Fornecedor: </dt>
+      <dd><%= @product_model.supplier.corporate_name %></dd>
+    </dl>
+  </div>
+
+  <div class="d-flex justify-content-center gap-4">
+    <%= link_to 'Voltar', :back, class: 'btn btn-secondary' %>
+  </div>
+
 </section>

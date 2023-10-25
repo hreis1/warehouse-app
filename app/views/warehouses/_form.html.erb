@@ -9,45 +9,45 @@
   </div>
 <% end %>
 <%= form_with model: @warehouse do |f| %>
-<div class="row">
-  <div class="mb-3 col-md-6">
-    <%= f.label :name, class: "form-label" %>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
+  <div class="row">
+    <div class="mb-3 col-md-6">
+      <%= f.label :name, class: "form-label" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
 
-  <div class="mb-3 col-md-3">
-    <%= f.label :code, class: "form-label" %>
-    <%= f.text_field :code, class: "form-control" %>
-  </div>
-	
-	<div class="mb-3 col-md-3">
-		<%= f.label :area, class: "form-label" %>
-		<%= f.number_field :area, class: "form-control" %>
-	</div>
+    <div class="mb-3 col-md-3">
+      <%= f.label :code, class: "form-label" %>
+      <%= f.text_field :code, class: "form-control" %>
+    </div>
+    
+    <div class="mb-3 col-md-3">
+      <%= f.label :area, class: "form-label" %>
+      <%= f.number_field :area, class: "form-control" %>
+    </div>
 
-	<div class="mb-3 col-md-6">
-		<%= f.label :address, class: "form-label" %>
-		<%= f.text_field :address, class: "form-control" %>
-	</div>
-  
-	<div class="mb-3 col-md-3">
-    <%= f.label :city, class: "form-label" %>
-    <%= f.text_field :city, class: "form-control" %>
-  </div>	
-	
-  <div class="mb-3 col-md-3">
-    <%= f.label :cep, class: "form-label" %>
-    <%= f.text_field :cep, class: "form-control" %>
-  </div>
+    <div class="mb-3 col-md-6">
+      <%= f.label :address, class: "form-label" %>
+      <%= f.text_field :address, class: "form-control" %>
+    </div>
+    
+    <div class="mb-3 col-md-3">
+      <%= f.label :city, class: "form-label" %>
+      <%= f.text_field :city, class: "form-control" %>
+    </div>	
+    
+    <div class="mb-3 col-md-3">
+      <%= f.label :cep, class: "form-label" %>
+      <%= f.text_field :cep, class: "form-control" %>
+    </div>
 
-  <div class="mb-3">
-    <%= f.label :description, class: "form-label" %>
-    <%= f.text_area :description, class: "form-control" %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :description, class: "form-label" %>
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
 
-  <div class="d-flex justify-content-center gap-4">
-		<%= f.submit nil, class: "btn btn-primary" %>
-    <%= link_to "Voltar", :back, class: "btn btn-secondary" %>
+    <div class="d-flex justify-content-center gap-4">
+      <%= f.submit nil, class: "btn btn-primary" %>
+      <%= link_to "Voltar", :back, class: "btn btn-secondary" %>
+    </div>
   </div>
-</div>
 <% end %>

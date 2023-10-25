@@ -1,6 +1,6 @@
 <section id="warehouses">
   <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
-    <h2>Galpões</h2>
+    <h2><%= Warehouse.model_name.human(count: 2) %></h2>
     
     <div>
       <%= link_to 'Cadastrar Galpão', new_warehouse_path, class: 'btn btn-primary' %>
@@ -10,7 +10,7 @@
   <div class="row">
     <% @warehouses.each do |w| %>
       <div class="col-md-6">
-        <h3><%= link_to w.name, warehouse_path(w) %></h3>
+        <h4><%= link_to w.name, warehouse_path(w) %></h4>
     
         <dl class="row ms-4">
           <dt class="col-3">Código:</dt>
