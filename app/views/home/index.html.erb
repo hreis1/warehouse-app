@@ -7,9 +7,9 @@
     </div>
   </div>
 
-  <div class="d-flex justify-content-center flex-wrap gap-2">
+  <div class="border rounded row">
     <% @warehouses.each do |w| %>
-      <div class="border" style="width: 24rem">
+      <div class="border col-md-6">
         <h3><%= link_to w.name, warehouse_path(w) %></h3>
     
         <dl class="row ms-4">
@@ -26,6 +26,6 @@
   </div>
 
   <% if @warehouses.empty? %>
-    <p>Nenhum galpão cadastrado</p>
+    <p class="text-muted">Nenhum galpão cadastrado</p>
   <% end %>
 </section>
