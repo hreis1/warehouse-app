@@ -18,18 +18,22 @@ describe 'User register order' do
     Warehouse.create!(name: 'Galpão 2', code: 'DEF', address: 'Rua 2', area: 2000, city: 'Cidade B', description: 'Galpão com 2000m²', cep: '87654-321')
     warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
 
+    allow(SecureRandom).to receive(:alphanumeric).with(10).and_return('ABC1234567')
+
     visit root_path
     click_on 'Registrar Pedido'
-    fill_in 'Data de entrega estimada', with: '25/12/2021'
+    estimated_delivery_date = Date.today.next_day.strftime('%d/%m/%Y')
+    fill_in 'Data de entrega estimada', with: estimated_delivery_date
     select supplier.corporate_name, from: 'Fornecedor'
     select 'ABC - Galpão 1', from: 'Galpão Destino'
     click_on 'Registrar'
 
     expect(current_path).to eq(order_path(Order.last))
     expect(page).to have_content('Pedido registrado com sucesso!')
+    expect(page).to have_content('Pedido ABC1234567')
     expect(page).to have_content('Galpão Destino: Galpão 1')
     expect(page).to have_content('Fornecedor: Apple')
-    expect(page).to have_content('Data de entrega estimada: 25/12/2021')
+    expect(page).to have_content('Data de entrega estimada: ' + estimated_delivery_date)
     expect(page).to have_content('Usuário Responsável: Fulano Sicrano - fs@email')
     expect(page).not_to have_content('Galpão 2')
     expect(page).not_to have_content('Samsung')
