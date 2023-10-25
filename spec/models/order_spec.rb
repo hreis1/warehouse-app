@@ -6,6 +6,7 @@ RSpec.describe Order, type: :model do
       order = Order.new
 
       order.valid?
+      expect(order.errors.include?(:supplier)).to be true
       expect(order.errors[:estimated_delivery_date]).to include('não pode ficar em branco')
       expect(order.errors[:supplier]).to include('é obrigatório(a)')
       expect(order.errors[:warehouse]).to include('é obrigatório(a)')
@@ -19,8 +20,22 @@ RSpec.describe Order, type: :model do
       order.valid?
       expect(order.code).not_to be_empty
     end
-    it 'estimated_delivery_date must be in the future' do
+    it 'estimated_delivery_date cannot be in the past' do
       order = Order.new(estimated_delivery_date: Date.today.prev_day)
+
+      order.valid?
+      expect(order.errors[:estimated_delivery_date]).to include('deve ser no futuro')
+    end
+    
+    it 'estimated_delivery_date must be in the future' do
+      order = Order.new(estimated_delivery_date: Date.today.next_day)
+
+      order.valid?
+      expect(order.errors[:estimated_delivery_date]).to be_empty
+    end
+
+    it 'estimated_delivery_date cannot be today' do
+      order = Order.new(estimated_delivery_date: Date.today)
 
       order.valid?
       expect(order.errors[:estimated_delivery_date]).to include('deve ser no futuro')
