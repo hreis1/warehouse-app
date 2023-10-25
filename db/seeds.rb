@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-Warehouse.create!(name: "Galpão ADN gerador", code: "ADN", area: 1000, address: "Rua das Flores, 123", city: "Saõ Paulo", cep: "12345678", description: "Galpão de armazenamento de geradores")
+Warehouse.create!(name: "Galpão ADN gerador", code: "ADN", area: 1000, address: "Rua das Flores, 123", city: "São Paulo", cep: "12345678", description: "Galpão de armazenamento de geradores")
 Warehouse.create!(name: "Galpão SLV som", code: "SLV", area: 2000, address: "Avenida das Árvores, 456", city: "Rio de Janeiro", cep: "23456789", description: "Galpão de armazenamento de som")
 Warehouse.create!(name: "Galpão MND móveis", code: "MND", area: 3000, address: "Alameda dos Anjos, 789", city: "Salvador", cep: "34567890", description: "Galpão de armazenamento de móveis")
 Warehouse.create!(name: "Galpão ELT eletronicos", code: "ELT", area: 4000, address: "Praça das Pedras, 1011", city: "Belo Horizonte", cep: "45678901", description: "Galpão de armazenamento de eletronicos")

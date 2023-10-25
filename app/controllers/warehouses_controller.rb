@@ -23,7 +23,7 @@ class WarehousesController < ApplicationController
     if @warehouse.update(warehouse_params)
       return redirect_to warehouse_path(@warehouse), notice: "Galpão atualizado com sucesso!"
     end
-    flash.now[:notice] = "Galpão não atualizado"
+    flash.now[:alert] = "Galpão não atualizado"
     render :edit
   end
 

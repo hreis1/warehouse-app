@@ -17,9 +17,9 @@ gem "puma", "~> 5.0"
 
 gem "devise"
 
-gem "sassc"
-gem "bootstrap", "~> 5.1.0"
-gem "importmap-rails", "~> 1.2"
+gem "bootstrap"
+gem "importmap-rails"
+gem 'sass-rails'
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]

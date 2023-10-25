@@ -45,8 +45,9 @@
     <%= f.text_area :description, class: "form-control" %>
   </div>
 
-  <div class="mb-3">
+  <div class="d-flex justify-content-center gap-4">
 		<%= f.submit nil, class: "btn btn-primary" %>
+    <%= link_to "Voltar", :back, class: "btn btn-secondary" %>
   </div>
 </div>
 <% end %>
