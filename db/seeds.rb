@@ -41,8 +41,6 @@ ProductModel.create!(name: "Xperia XZ", weight: 161, height: 75, width: 150, dep
 ProductModel.create!(name: "Xperia XZ1", weight: 161, height: 75, width: 150, depth: 8000,sku: "SONYABCDEFGHIJKLMNO1" ,supplier: sony)
 ProductModel.create!(name: "Lumia 950", weight: 150, height: 75, width: 150, depth: 8000,sku: "NOKIAABCDEFGHIJKLMNO" ,supplier: nokia)
 ProductModel.create!(name: "Lumia 950XL", weight: 150, height: 75, width: 150, depth: 8000,sku: "NOKIAABCDEFGHIJKLMN1" ,supplier: nokia)
-ProductModel.create!(name: "Pixel 3", weight: 148, height: 75, width: 150, depth: 8000,sku: "GOOGLEABCDEFGHIJKLMN" ,supplier: google)
-ProductModel.create!(name: "Pixel 4", weight: 148, height: 75, width: 150, depth: 8000,sku: "GOOGLEABCDEFGHIJKLM1" ,supplier: google)
 
 User.create!(name: 'Ana', email:'ana@email.com', password:'123456')
 User.create!(name: 'Beatriz', email:'bea@email.com', password:'123456')

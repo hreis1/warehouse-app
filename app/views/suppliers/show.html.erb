@@ -1,40 +1,57 @@
 <section id="supplier">
-  <h2>Fornecedor <%= @supplier.brand_name %></h2>
-  <h3><%= @supplier.brand_name %></h3>
 
-  <dl>
-    <dt>Documento:</dt>
-    <dd><%= @supplier.registration_number %></dd>
-    <dt>Endereço:</dt>
-    <dd><%= @supplier.full_address %> - <%= @supplier.city %> - <%= @supplier.state %></dd>
-    <dt>Email:</dt>
-    <dd><%= @supplier.email %></dd>
-    <dt>Telefone:</dt>
-    <dd><%= @supplier.phone %></dd>
-  </dl>
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+    <h2><%= Supplier.model_name.human %> <%= @supplier.brand_name %></h2>
+  </div>
+
+  <div class="d-flex justify-content-center m-4 align-items-center">
+    <dl class="mt-4">
+      <dt>Documento:</dt>
+      <dd><%= @supplier.registration_number %></dd>
+      <dt>Endereço:</dt>
+      <dd><%= @supplier.full_address %> - <%= @supplier.city %> - <%= @supplier.state %></dd>
+      <dt>Email:</dt>
+      <dd><%= @supplier.email %></dd>
+      <dt>Telefone:</dt>
+      <dd><%= @supplier.phone %></dd>
+    </dl>
+  </div>
+
+
+  <div class="d-flex justify-content-center gap-4">
+    <%= link_to "Editar", edit_supplier_path(@supplier), class: "btn btn-primary" %>
+    <%= link_to "Voltar", suppliers_path, class: "btn btn-secondary" %>
+  </div>
+
+
 </section>
 
-<div>
-  <%= link_to "Editar", edit_supplier_path(@supplier) %>
-  <%= link_to "Voltar", suppliers_path %>
-</div>
-
-<section id="product_models">
+<section class="row mt-4" id="product_models">
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+    <h2><%= ProductModel.model_name.human(count: @product_models.size) %></h2>
+  </div>
+  
   <% if @product_models.any? %>
-    <h2>Modelos de Produtos</h2>
+
     <% @product_models.each do |pm| %>
-      <dl>
-        <dt>Nome:</dt>
-        <dd><%= link_to pm.name, pm %></dd>
-        <dt>Dimensões:</dt>
-        <dd><%= "#{pm.height}cm x #{pm.width}cm x #{pm.depth}cm" %></dd>
-        <dt>Peso:</dt>
-        <dd><%= "#{pm.weight}g" %></dd>
-        <dt>SKU:</dt>
-        <dd><%= pm.sku %></dd>
-      </dl>
+      <div class="col-md-6">
+        <h4><%= link_to pm.name, product_model_path(pm) %></h4>
+
+        <dl class="row ms-4">
+          <dt class="col-3">Nome:</dt>
+          <dd class="col-9"><%= link_to pm.name, pm %></dd>
+          <dt class="col-3">Dimensões:</dt>
+          <dd class="col-9"><%= "#{pm.height}cm x #{pm.width}cm x #{pm.depth}cm" %></dd>
+          <dt class="col-3">Peso:</dt>
+          <dd class="col-9"><%= "#{pm.weight}g" %></dd>
+          <dt class="col-3">SKU:</dt>
+          <dd class="col-9"><%= pm.sku %></dd>
+        </dl>
+
+      </div>
     <% end %>
+
   <% else %>
-    <p>Nenhum modelo de produto cadastrado</p>
+    <p class="text-muted d-flex justify-content-center m-4 align-items-center">Nenhum modelo de produto cadastrado</p>
   <% end %>
 </section>

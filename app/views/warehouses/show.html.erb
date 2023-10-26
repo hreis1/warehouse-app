@@ -1,7 +1,7 @@
 <section id="warehouse">
   
   <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
-    <h2>Galpão <%= @warehouse.code %></h2>
+    <h2><%= Warehouse.model_name.human %> <%= @warehouse.code %></h2>
   </div>
 
   <div class="d-flex justify-content-center m-4 align-items-center">
