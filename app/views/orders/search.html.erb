@@ -1,0 +1,20 @@
+<h2>Resultados da busca por: <%= @query %></h2>
+
+<% if @order.present? %>
+  <p>1 pedido encontrado</p>
+  <dl>
+    <dt><%= Order.human_attribute_name(:code) %>:</dt>
+    <dd><%= @order.code %></dd>
+    <dt><%= Order.human_attribute_name(:warehouse) %>:</dt>
+    <dd><%= @order.warehouse.name %></dd>
+    <dt><%= Order.human_attribute_name(:supplier) %>:</dt>
+    <dd><%= @order.supplier.corporate_name %></dd>
+    <dt><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
+    <dd><%= @order.estimated_delivery_date.strftime('%d/%m/%Y') %></dd>
+  </dl>
+</div>
+<% else %>
+  <p>Nenhum <%= Order.model_name.human.downcase %> encontrado</p>
+<% end %>
+
+<%= link_to 'Voltar', root_path %>

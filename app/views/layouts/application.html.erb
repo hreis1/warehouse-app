@@ -28,6 +28,10 @@
               <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item" >
                   <% if user_signed_in? %>
+                  <%= form_with url:search_orders_path, method: :get, class: "d-flex me-4" do |f| %>
+                    <%= f.text_field :query, class: "form-control me-2" %>
+                    <%= f.submit "Buscar", class: "btn btn-sm btn-outline-secondary" %>
+                  <% end %>
                 </li>
                 <span class="navbar-text me-2">
                   <%= current_user.description %>
