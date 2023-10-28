@@ -1,0 +1,16 @@
+<div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+  <h2>Novo Item do Pedido <%= @order.code %></h2>
+</div>
+
+<% if @order_item.errors.any? %>
+  <div class="alert alert-danger">
+    <p>Verifique os seguintes erros:</p>
+    <ul>
+      <% @order_item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= render 'form', order_item: @order_item %>

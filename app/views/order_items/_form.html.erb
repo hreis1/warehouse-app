@@ -1,0 +1,22 @@
+<div class="d-flex justify-content-center">
+  <%= form_with model: [@order, @order_item] do |f| %>
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <%= f.label :product_model_id, class: "form-label" %>
+        <div class="input-group mb-3">
+          <%= f.collection_select :product_model_id, @product_models, :id, :name, {:prompt=>true}, {:class=>'form-select'} %>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <%= f.label :quantity, class: "form-label" %>
+        <%= f.number_field :quantity, class: "form-control" %>
+      </div>
+
+      <div class="d-flex justify-content-center gap-4 mt-4">
+        <%= f.submit nil, class: "btn btn-primary" %>
+        <%= link_to 'Voltar', @order, class: "btn btn-secondary" %>
+      </div>
+    </div>
+  <% end %>
+</div>

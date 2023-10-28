@@ -51,6 +51,8 @@ describe 'User register order' do
     expect(current_path).to eq(orders_path)
     expect(page).to have_content('Verifique os seguintes erros:')
     expect(page).to have_content('Data de entrega estimada não pode ficar em branco')
+    expect(page).to have_content('Fornecedor é obrigatório(a)')
+    expect(page).to have_content('Galpão Destino é obrigatório(a)')
   end
 
   it 'and add a product to the order' do
