@@ -26,11 +26,11 @@ describe 'User register order' do
     fill_in 'Data de entrega estimada', with: estimated_delivery_date
     select supplier.corporate_name, from: 'Fornecedor'
     select 'ABC - Galpão 1', from: 'Galpão Destino'
-    click_on 'Registrar'
+    click_on 'Cadastrar'
 
     expect(current_path).to eq(order_path(Order.last))
     expect(page).to have_content('Pedido registrado com sucesso!')
-    expect(page).to have_content('Pedido ABC1234567')
+    expect(page).to have_content('Código: ABC1234567')
     expect(page).to have_content('Galpão Destino: Galpão 1')
     expect(page).to have_content('Fornecedor: Apple')
     expect(page).to have_content('Data de entrega estimada: ' + estimated_delivery_date)
@@ -45,7 +45,7 @@ describe 'User register order' do
 
     visit root_path
     click_on 'Registrar Pedido'
-    click_on 'Registrar'
+    click_on 'Cadastrar'
     
     expect(current_path).to eq(orders_path)
     expect(page).to have_content('Verifique os seguintes erros:')

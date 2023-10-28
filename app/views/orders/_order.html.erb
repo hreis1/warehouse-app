@@ -8,5 +8,7 @@
     <dd class="col-6"><%= order.supplier.corporate_name %></dd>
     <dt class="col-6"><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
     <dd class="col-6"><%= order.estimated_delivery_date.strftime('%d/%m/%Y') %></dd>
+    <dt class="col-6"><%= Order.human_attribute_name(:user) %>:</dt>
+    <dd class="col-6"><%= order.user.description %></dd>
   </dl>
 </div>

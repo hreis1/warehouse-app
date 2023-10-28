@@ -48,7 +48,7 @@ describe "User edits supplier" do
     fill_in "Cidade", with: "Cidade 2"
     fill_in "Estado", with: "CD"
     fill_in "Email", with: "contato@cd.com"
-    fill_in "Telefone", with: "11999999999"
+    fill_in "Telefone", with: "22888888888"
     click_on "Atualizar Fornecedor"
 
     expect(current_path).to eq(supplier_path(Supplier.last))
@@ -60,7 +60,7 @@ describe "User edits supplier" do
     expect(page).to have_content("Cidade 2")
     expect(page).to have_content("CD")
     expect(page).to have_content("contato@cd.com")
-    expect(page).to have_content("11999999999")
+    expect(page).to have_content("22888888888")
   end
 
   it "and attributes cannot be blank" do
