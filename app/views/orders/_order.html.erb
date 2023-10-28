@@ -1,0 +1,12 @@
+<div class="col-md-6">
+  <dl class="row ms-4">
+    <dt class="col-6"><%= Order.human_attribute_name(:code) %>:</dt>
+    <dd class="col-6"><%= link_to order.code, order_path(order) %></dd>
+    <dt class="col-6"><%= Order.human_attribute_name(:warehouse) %>:</dt>
+    <dd class="col-6"><%= order.warehouse.name %></dd>
+    <dt class="col-6"><%= Order.human_attribute_name(:supplier) %>:</dt>
+    <dd class="col-6"><%= order.supplier.corporate_name %></dd>
+    <dt class="col-6"><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
+    <dd class="col-6"><%= order.estimated_delivery_date.strftime('%d/%m/%Y') %></dd>
+  </dl>
+</div>
