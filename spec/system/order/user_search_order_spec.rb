@@ -30,13 +30,14 @@ describe "User search order" do
     
     ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 8,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
 
+    allow(SecureRandom).to receive(:alphanumeric).and_return('ABC123')
     order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
 
     visit root_path
-    fill_in "query", with: order.code
+    fill_in "query", with: "ABC"
     click_on "Buscar"
 
-    expect(page).to have_content("Resultados da busca por: #{order.code}")
+    expect(page).to have_content("Resultados da busca por: ABC")
     expect(page).to have_content("1 pedido encontrado")
 
     expect(page).to have_content("Código: #{order.code}")
@@ -99,5 +100,23 @@ describe "User search order" do
     click_on "Buscar"
 
     expect(page).to have_content("Digite algo para buscar")
+  end
+
+  it 'and search exact code' do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+
+    order1 = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    order2 = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+
+    visit root_path
+    fill_in "query", with: order1.code
+    click_on "Buscar"
+
+    expect(current_path).to eq(order_path(order1))
   end
 end

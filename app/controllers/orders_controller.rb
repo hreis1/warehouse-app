@@ -47,6 +47,9 @@ class OrdersController < ApplicationController
       return redirect_to request.referrer, alert: 'Digite algo para buscar'
     end
     @orders = Order.where('code LIKE ?', "%#{@query}%")
+    if @orders.size == 1 && @orders.first.code == @query
+      return redirect_to @orders.first
+    end
   end
 
   def delivered
