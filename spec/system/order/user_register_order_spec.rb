@@ -52,4 +52,31 @@ describe 'User register order' do
     expect(page).to have_content('Verifique os seguintes erros:')
     expect(page).to have_content('Data de entrega estimada não pode ficar em branco')
   end
+
+  it 'and add a product to the order' do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    
+    login_as(user)
+    
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+    
+    product1 = ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 8,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+    product2 = ProductModel.create!(name: "S10", weight: 157, height: 70, width: 150, depth: 7,sku: "SAMSUNGABCDEFGHIJKLM" ,supplier: supplier)
+    product3 = ProductModel.create!(name: "Notebook", weight: 2000, height: 200, width: 300, depth: 20,sku: "NOTEBOOKABCDEFGHIJKL" ,supplier: supplier)
+
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+
+    order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    
+    OrderItem.create!(order: order, product_model: product1, quantity: 11)
+    OrderItem.create!(order: order, product_model: product2, quantity: 13)
+
+    visit root_path
+    click_on 'Meus Pedidos'
+    click_on order.code
+
+    expect(page).to have_content('Itens do Pedido')
+    expect(page).to have_content('11 x Iphone 11')
+    expect(page).to have_content('13 x S10')
+  end
 end

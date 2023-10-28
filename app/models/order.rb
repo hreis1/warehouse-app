@@ -2,6 +2,10 @@ class Order < ApplicationRecord
   validates :estimated_delivery_date, :supplier, :warehouse, presence: true
   validates :code, presence: true, uniqueness: true
   validates :estimated_delivery_date, comparison: { greater_than: Date.today, message: 'deve ser no futuro' }
+  
+  has_many :order_items
+  has_many :product_models, through: :order_items
+  
   belongs_to :warehouse
   belongs_to :supplier
   belongs_to :user
