@@ -25,7 +25,10 @@ class OrdersController < ApplicationController
   end
 
   def search
-    @query = params.require(:query)
-    @order = Order.find_by(code: @query)
+    @query = params[:query]
+    if @query.blank?
+      return redirect_to request.referrer, alert: 'Digite algo para buscar'
+    end
+    @orders = Order.where('code LIKE ?', "%#{@query}%")
   end
 end

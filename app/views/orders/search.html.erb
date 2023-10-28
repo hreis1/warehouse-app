@@ -1,20 +1,29 @@
-<h2>Resultados da busca por: <%= @query %></h2>
+<section id="orders">
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">  
+    <h2>Resultados da busca por: <%= @query %></h2>
+  </div>
 
-<% if @order.present? %>
-  <p>1 pedido encontrado</p>
-  <dl>
-    <dt><%= Order.human_attribute_name(:code) %>:</dt>
-    <dd><%= @order.code %></dd>
-    <dt><%= Order.human_attribute_name(:warehouse) %>:</dt>
-    <dd><%= @order.warehouse.name %></dd>
-    <dt><%= Order.human_attribute_name(:supplier) %>:</dt>
-    <dd><%= @order.supplier.corporate_name %></dd>
-    <dt><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
-    <dd><%= @order.estimated_delivery_date.strftime('%d/%m/%Y') %></dd>
-  </dl>
-</div>
-<% else %>
-  <p>Nenhum <%= Order.model_name.human.downcase %> encontrado</p>
-<% end %>
-
-<%= link_to 'Voltar', root_path %>
+  <div class="row">
+    <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+      <%= @orders.count %> <%= Order.model_name.human(count: @orders.count).downcase %> <%= t(:found, count: @orders.count) %>
+    </div>
+    <% @orders.each do |order| %>
+      <div class="col-md-6">
+        <dl class="row ms-4">
+          <dt class="col-6"><%= Order.human_attribute_name(:code) %>:</dt>
+          <dd class="col-6"><%= link_to order.code, order_path(order) %></dd>
+          <dt class="col-6"><%= Order.human_attribute_name(:warehouse) %>:</dt>
+          <dd class="col-6"><%= order.warehouse.name %></dd>
+          <dt class="col-6"><%= Order.human_attribute_name(:supplier) %>:</dt>
+          <dd class="col-6"><%= order.supplier.corporate_name %></dd>
+          <dt class="col-6"><%= Order.human_attribute_name(:estimated_delivery_date) %>:</dt>
+          <dd class="col-6"><%= order.estimated_delivery_date.strftime('%d/%m/%Y') %></dd>
+        </dl>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+    <%= link_to 'Voltar', root_path , class: 'btn btn-primary' %>
+  </div>  
+</section>

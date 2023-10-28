@@ -44,4 +44,60 @@ describe "User search order" do
     expect(page).to have_content("Galpão Destino: #{order.warehouse.name}")
     expect(page).to have_content("Data de entrega estimada: #{order.estimated_delivery_date.strftime('%d/%m/%Y')}")
   end
+
+  it 'and finds many orders by code' do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+
+    warehouse1 = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+    warehouse2 = Warehouse.create!(name: 'Galpão 2', code: 'DEF', address: 'Rua 2', area: 2000, city: 'Cidade B', description: 'Galpão com 2000m²', cep: '12345-678')
+
+    allow(SecureRandom).to receive(:alphanumeric).and_return('ABC123', 'ABC456', 'DEF123')
+    order1 = Order.create!(supplier: supplier, warehouse: warehouse1, estimated_delivery_date: Date.today.next_day, user: user)
+    order2 = Order.create!(supplier: supplier, warehouse: warehouse1, estimated_delivery_date: Date.today.next_day, user: user)
+    order3 = Order.create!(supplier: supplier, warehouse: warehouse2, estimated_delivery_date: Date.today.next_day, user: user)
+
+    visit root_path
+    fill_in "query", with: 'ABC'
+    click_on "Buscar"
+
+    expect(page).to have_content("Resultados da busca por: ABC")
+    expect(page).to have_content("2 pedidos encontrados")
+    expect(page).to have_content("Código: #{order1.code}")
+    expect(page).to have_content("Código: #{order2.code}")
+    expect(page).not_to have_content("Código: #{order3.code}")
+  end
+
+  it 'and not found order by code' do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+
+    allow(SecureRandom).to receive(:alphanumeric).and_return('ABC123')
+    order1 = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+
+    visit root_path
+    fill_in "query", with: 'DEF'
+    click_on "Buscar"
+
+    expect(page).to have_content("Resultados da busca por: DEF")
+    expect(page).to have_content("0 pedidos encontrados")
+    expect(page).not_to have_content("Código: ABC123")
+  end
+
+  it 'and blank search' do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    visit root_path
+    fill_in "query", with: ''
+    click_on "Buscar"
+
+    expect(page).to have_content("Digite algo para buscar")
+  end
 end
