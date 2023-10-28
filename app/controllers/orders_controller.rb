@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_order_and_check_user, only: [:show, :edit, :update]
+  before_action :set_order_and_check_user, only: [:show, :edit, :update, :delivered, :canceled]
   
   def index
     @orders = current_user.orders
@@ -47,6 +47,22 @@ class OrdersController < ApplicationController
       return redirect_to request.referrer, alert: 'Digite algo para buscar'
     end
     @orders = Order.where('code LIKE ?', "%#{@query}%")
+  end
+
+  def delivered
+    if @order.pending?
+      @order.delivered!
+      return redirect_to @order
+    end
+      redirect_to @order, alert: 'Você não tem permissão para acessar essa página'
+  end
+
+  def canceled
+    if @order.pending?
+      @order.canceled!
+      return redirect_to @order
+    end
+      redirect_to @order, alert: 'Você não tem permissão para acessar essa página'
   end
 
   private

@@ -32,6 +32,7 @@ describe "User view own orders" do
     expect(page).to have_content("Fornecedor: #{order1.supplier.corporate_name}")
     expect(page).to have_content("Galpão Destino: #{order1.warehouse.name}")
     expect(page).to have_content("Data de entrega estimada: #{order1.estimated_delivery_date.strftime('%d/%m/%Y')}")
+    expect(page).to have_content("Situação do Pedido: Pendente")
     expect(page).not_to have_content("Código: #{order2.code}")
     expect(page).not_to have_content("Código: #{order3.code}")
   end

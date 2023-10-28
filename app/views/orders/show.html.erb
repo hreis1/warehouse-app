@@ -8,6 +8,10 @@
   </div>
 
   <div class="d-flex justify-content-center gap-4">
+    <% if @order.pending? %>
+      <%= button_to 'Confirmar Entrega', delivered_order_path(@order), class: 'btn btn-success' %>
+      <%= button_to 'Cancelar Pedido', canceled_order_path(@order), class: 'btn btn-danger' %> 
+    <% end %>
     <%= link_to 'Editar', edit_order_path(@order), class: 'btn btn-primary' %>
     <%= link_to 'Voltar', orders_path, class: 'btn btn-secondary' %>
   </div>

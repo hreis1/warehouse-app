@@ -33,6 +33,7 @@ describe 'User register order' do
     expect(page).to have_content('Código: ABC1234567')
     expect(page).to have_content('Galpão Destino: Galpão 1')
     expect(page).to have_content('Fornecedor: Apple')
+    expect(page).to have_content('Situação do Pedido: Pendente')
     expect(page).to have_content('Data de entrega estimada: ' + estimated_delivery_date)
     expect(page).to have_content('Usuário Responsável: Fulano Sicrano - fs@email')
     expect(page).not_to have_content('Galpão 2')

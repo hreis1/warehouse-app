@@ -6,6 +6,8 @@ class Order < ApplicationRecord
   belongs_to :supplier
   belongs_to :user
 
+  enum status: { pending: 0, delivered: 5, canceled: 10 } 
+
   before_validation :generate_code, on: :create
 
   private
