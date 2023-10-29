@@ -16,7 +16,7 @@ RSpec.describe StockProduct, type: :model do
 
       expect(stock_product.serial_number).to_not eq(nil)
     end
-  end    
+  end
 
   describe "generate serial number" do
     it "when create a new stock product" do
@@ -45,5 +45,17 @@ RSpec.describe StockProduct, type: :model do
 
       expect(stock_product.serial_number).to eq(original_serial_number)
     end
+  end
+
+  it "and order cannot be delivered if it has no items" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    supplier = Supplier.create!(corporate_name: 'Fornecedor ABC', brand_name: 'ABC', registration_number: '1234567891011', full_address: 'Rua das Flores', city: 'Cidade 1', state: 'AB', email: 'contato@abc.com', phone: '11999999999')
+    product_model = ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 1,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+    warehouse = Warehouse.create!(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+    order = Order.create!(estimated_delivery_date: Date.today.next_day, supplier: supplier, warehouse: warehouse, user: user)
+    stock_product = StockProduct.new(order: order, warehouse: warehouse, product_model: product_model)
+    
+    expect(stock_product.valid?).to eq(false)
+    expect(stock_product.errors[:order]).to include('não pode ser entregue pois não possui itens')
   end
 end

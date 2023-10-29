@@ -14,6 +14,8 @@ describe "User view stock from warehouse" do
     product3 = ProductModel.create!(name: "Notebook Dell", weight: 2000, height: 200, width: 300, depth: 20,sku: "NOTEBOOKABCDEFGHIJKL" ,supplier: supplier)
     
     order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    OrderItem.create!(order: order, product_model: product1, quantity: 3)
+    OrderItem.create!(order: order, product_model: product2, quantity: 2)
 
     3.times { StockProduct.create!(order: order, product_model: product1, warehouse: warehouse) }
     2.times { StockProduct.create!(order: order, product_model: product2, warehouse: warehouse) }
@@ -25,9 +27,5 @@ describe "User view stock from warehouse" do
     expect(page).to have_content("3 x #{product1.name}")
     expect(page).to have_content("2 x #{product2.name}")
     expect(page).not_to have_content("#{product3.name}")
-  end
-
-  it "on warehouse page" do
-    # TODO
   end
 end

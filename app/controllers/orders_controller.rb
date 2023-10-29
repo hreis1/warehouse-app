@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_order_and_check_user, only: [:show, :edit, :update, :delivered, :canceled]
-  
+  before_action :set_status, only: [:update, :edit]
+
   def index
     @orders = current_user.orders
   end
@@ -27,17 +28,11 @@ class OrdersController < ApplicationController
   def show; end
 
   def edit
-    unless @order.pending?
-      return redirect_to root_path, alert: 'Você não tem permissão para acessar essa página'
-    end
     @suppliers = Supplier.all
     @warehouses = Warehouse.all    
   end
 
   def update
-    unless @order.pending?
-      return redirect_to root_path, alert: 'Você não tem permissão para acessar essa página'
-    end
     if @order.update(order_params)
       return redirect_to @order, notice: 'Pedido atualizado com sucesso'
     end
@@ -96,5 +91,11 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:estimated_delivery_date, :supplier_id, :warehouse_id)
+  end
+
+  def set_status
+    unless @order.pending?
+      return redirect_to root_path, alert: 'Você não tem permissão para acessar essa página'
+    end
   end
 end
