@@ -10,7 +10,7 @@ class OrderItemsController < ApplicationController
   def create
     @order_item = OrderItem.new(order_item_params)
     @order_item.order = @order
-    if @order_item.save
+    if @order.pending? && @order_item.save
       return redirect_to @order, notice: 'Item adicionado com sucesso'
     end
     @product_models = @order.supplier.product_models

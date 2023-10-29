@@ -72,10 +72,10 @@ RSpec.describe Order, type: :model do
       warehouse2 = Warehouse.create!(name: 'Galpão B', code: 'DEF', city: 'Cidade B', area: '2000', address: 'Rua B', cep: '87654321', description: 'Galpão com 2000m²')
       order = Order.new(estimated_delivery_date: Date.today.next_day, supplier: supplier, warehouse: warehouse, user: user) 
       order.save!
-      code = order.code
+      original_code = order.code
 
-      order.update(warehouse: warehouse2)
-      expect(order.code).to eq(code)
+      order.update!(warehouse: warehouse2)
+      expect(order.code).to eq(original_code)
     end
   end
 end

@@ -63,4 +63,21 @@ describe "User edit own order" do
     expect(current_path).to eq(root_path)
     expect(page).to have_content("Você não tem permissão para acessar essa página")
   end
+
+  it "and can't edit a delivered order" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+
+    order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    order.delivered!
+    
+    visit edit_order_path(order)
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("Você não tem permissão para acessar essa página")
+  end
 end

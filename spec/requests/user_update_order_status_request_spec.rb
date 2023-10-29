@@ -64,15 +64,34 @@ describe "User update order status" do
     login_as(user)
 
     supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
- 
+    
+    product_model =  ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 8,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+
     warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
  
     order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    OrderItem.create!(order: order, product_model: product_model, quantity: 1)
     order.delivered!
 
     post delivered_order_path(order)
 
     expect(response).to redirect_to(order_path(order))
     expect(flash[:alert]).to eq('Você não tem permissão para acessar essa página')
+  end
+
+  it "can't change status to delivered if order has no items" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+ 
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+ 
+    order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    
+    post delivered_order_path(order)
+
+    expect(response).to redirect_to(order_path(order))
+    expect(flash[:alert]).to eq('Pedido não pode ser entregue pois não possui itens')
   end
 end

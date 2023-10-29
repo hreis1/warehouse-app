@@ -16,7 +16,21 @@
       <dd><%= @warehouse.full_address %></dd>
     </dl>
   </div>
-  
+
+  <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
+    <h2>Itens em estoque</h2>
+  </div>
+
+  <div class="d-flex flex-column justify-content-center m-4 align-items-center">
+    <ul class="list-group">
+      <% @stocks.each_pair do |pm, quantity| %>
+        <li class="list-group-item">
+          <%= quantity %> x <%= pm.name %>
+        </li> 
+      <% end %>
+    </ul>
+  </div>
+
   <div class="d-flex justify-content-center gap-4">
     <%= link_to 'Editar', edit_warehouse_path(@warehouse), class: 'btn btn-primary' %>
     <%= link_to 'Voltar', root_path, class: 'btn btn-secondary' %>

@@ -27,11 +27,17 @@ class OrdersController < ApplicationController
   def show; end
 
   def edit
+    unless @order.pending?
+      return redirect_to root_path, alert: 'Você não tem permissão para acessar essa página'
+    end
     @suppliers = Supplier.all
-    @warehouses = Warehouse.all
+    @warehouses = Warehouse.all    
   end
 
   def update
+    unless @order.pending?
+      return redirect_to root_path, alert: 'Você não tem permissão para acessar essa página'
+    end
     if @order.update(order_params)
       return redirect_to @order, notice: 'Pedido atualizado com sucesso'
     end
@@ -53,11 +59,22 @@ class OrdersController < ApplicationController
   end
 
   def delivered
+    unless @order.order_items.any?
+      return redirect_to @order, alert: 'Pedido não pode ser entregue pois não possui itens'
+    end
+
     if @order.pending?
       @order.delivered!
-      return redirect_to @order
+
+      @order.order_items.each do |item|
+        item.quantity.times do
+          StockProduct.create!(order: @order, product_model: item.product_model, warehouse: @order.warehouse)
+        end
+      end
+
+      return redirect_to @order, notice: 'Pedido entregue com sucesso'
     end
-      redirect_to @order, alert: 'Você não tem permissão para acessar essa página'
+    redirect_to @order, alert: 'Você não tem permissão para acessar essa página'
   end
 
   def canceled

@@ -12,7 +12,7 @@
     <h2>Itens do Pedido</h2>
     
     <div>
-      <%= link_to 'Adicionar Item', new_order_order_item_path(@order), class: 'btn btn-primary' %>
+      
     </div>
   </div>
   
@@ -26,12 +26,13 @@
     </ul>
   </div>
 
-  <div class="d-flex justify-content-center gap-4">
+  <div class="d-flex justify-content-center gap-4 mb-4">
     <% if @order.pending? %>
       <%= button_to 'Confirmar Entrega', delivered_order_path(@order), class: 'btn btn-success' %>
-      <%= button_to 'Cancelar Pedido', canceled_order_path(@order), class: 'btn btn-danger' %> 
+      <%= button_to 'Cancelar Pedido', canceled_order_path(@order), class: 'btn btn-danger' %>
+      <%= link_to 'Adicionar Item', new_order_order_item_path(@order), class: 'btn btn-primary' %>
+      <%= link_to 'Editar', edit_order_path(@order), class: 'btn btn-primary' %>
     <% end %>
-    <%= link_to 'Editar', edit_order_path(@order), class: 'btn btn-primary' %>
     <%= link_to 'Voltar', orders_path, class: 'btn btn-secondary' %>
   </div>
 </section>

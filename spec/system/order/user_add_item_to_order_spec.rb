@@ -106,4 +106,50 @@ describe 'User add item to order' do
     expect(current_path).to eq(root_path)
     expect(page).to have_content("Você não tem permissão para acessar essa página")
   end
+
+  it "and can't add item to a delivered order" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+
+    product1 = ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 1,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+    product2 = ProductModel.create!(name: "S10", weight: 157, height: 70, width: 150, depth: 1,sku: "SAMSUNGABCDEFGHIJKLM" ,supplier: supplier)
+
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+
+    order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    OrderItem.create!(order: order, product_model: product1, quantity: 10)
+    order.delivered!
+
+    visit new_order_order_item_path(order)
+    select "#{product2.name}", from: 'Produto'
+    fill_in 'Quantidade', with: 10
+    click_on 'Cadastrar Item do Pedido'
+      
+    expect(page).to have_content('Não foi possível adicionar o item')
+  end
+  
+  it "and can't add item to a canceled order" do
+    user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+    login_as(user)
+
+    supplier = Supplier.create!(corporate_name: "Apple", brand_name: "Apple", registration_number: "1234567891011", full_address: "Rua das Flores, 456", city: "Cidade 1", state: "CD", email: "contato@apple.com", phone: "11999999999")
+
+    product1 = ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 1,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+    product2 = ProductModel.create!(name: "S10", weight: 157, height: 70, width: 150, depth: 1,sku: "SAMSUNGABCDEFGHIJKLM" ,supplier: supplier)
+
+    warehouse = Warehouse.create!(name: 'Galpão 1', code: 'ABC', address: 'Rua 1', area: 1000, city: 'Cidade A', description: 'Galpão com 1000m²', cep: '12345-678')
+
+    order = Order.create!(supplier: supplier, warehouse: warehouse, estimated_delivery_date: Date.today.next_day, user: user)
+    OrderItem.create!(order: order, product_model: product1, quantity: 10)
+    order.canceled!
+
+    visit new_order_order_item_path(order)
+    select "#{product2.name}", from: 'Produto'
+    fill_in 'Quantidade', with: 10
+    click_on 'Cadastrar Item do Pedido'
+      
+    expect(page).to have_content('Não foi possível adicionar o item')
+  end
 end
