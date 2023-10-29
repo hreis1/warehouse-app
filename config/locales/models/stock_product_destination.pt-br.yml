@@ -1,0 +1,11 @@
+pt-BR:
+  activerecord:
+    models:
+      stock_product_destination:
+        one: "Destino de Produto"
+        other: "Destinos de Produto"
+    attributes:
+      stock_product_destination:
+        address: "Endereço Destinátario"
+        recipient: "Destinatário"
+        product_model_id: "Item para saída"

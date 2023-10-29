@@ -17,6 +17,14 @@
     </dl>
   </div>
 
+  <div class="d-flex justify-content-center gap-4 mb-4">
+    <%= link_to 'Editar', edit_warehouse_path(@warehouse), class: 'btn btn-primary' %>
+    <%= link_to 'Voltar', root_path, class: 'btn btn-secondary' %>
+    <%= button_to 'Deletar', @warehouse, method: :delete, class: 'btn btn-danger' %>
+  </div>
+</section>  
+
+<section id="stock_product">
   <div class="d-flex gap-4 justify-content-center m-4 align-items-center">
     <h2>Itens em estoque</h2>
   </div>
@@ -30,11 +38,31 @@
       <% end %>
     </ul>
   </div>
-
-  <div class="d-flex justify-content-center gap-4">
-    <%= link_to 'Editar', edit_warehouse_path(@warehouse), class: 'btn btn-primary' %>
-    <%= link_to 'Voltar', root_path, class: 'btn btn-secondary' %>
-    <%= button_to 'Deletar', @warehouse, method: :delete, class: 'btn btn-danger' %>
-  </div>
+</section>
   
+<section id="stock_destinations">
+  <div class="d-flex justify-content-center gap-4 mb-4">
+    <h2>Saída de produtos</h2>
+  </div>
+
+  <div class="d-flex justify-content-center gap-4 mb-4">
+    <%= form_with url: warehouse_stock_product_destinations_path(@warehouse) do |f| %>
+      <div class="mb-3">
+        <%= f.label :product_model_id, "Item para saída", class: "form-label" %>
+        <%= f.collection_select :product_model_id, @product_models, :id, :name, {prompt: true}, class: "form-select" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :recipient, "Destinário", class: "form-label" %>
+        <%= f.text_field :recipient, class: "form-control" %>
+      </div>
+      <div class="mb-3">
+        <%= f.label :address, "Endereço Destinatário", class: "form-label" %>
+        <%= f.text_field :address, class: "form-control" %>
+      </div>
+
+      <div class="d-flex justify-content-center gap-4 mb-4">
+        <%= f.submit "Registrar saída", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  </div>
 </section>

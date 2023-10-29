@@ -3,10 +3,16 @@ class StockProduct < ApplicationRecord
   belongs_to :order
   belongs_to :product_model
 
+  has_one :stock_product_destination
+
   validate :must_have_at_least_one_item
   validates :serial_number, presence: true
 
   before_validation :generate_serial_number, on: :create
+  
+  def available?
+    stock_product_destination.nil?
+  end
 
   private
 

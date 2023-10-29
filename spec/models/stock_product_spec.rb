@@ -58,4 +58,29 @@ RSpec.describe StockProduct, type: :model do
     expect(stock_product.valid?).to eq(false)
     expect(stock_product.errors[:order]).to include('não pode ser entregue pois não possui itens')
   end
+
+  describe "#available?" do
+    it "true if there is no destination" do
+      user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+      supplier = Supplier.create!(corporate_name: 'Fornecedor ABC', brand_name: 'ABC', registration_number: '1234567891011', full_address: 'Rua das Flores', city: 'Cidade 1', state: 'AB', email: 'contato@abc.com', phone: '11999999999')
+      product_model = ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 1,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+      warehouse = Warehouse.create!(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+      order = Order.create!(estimated_delivery_date: Date.today.next_day, supplier: supplier, warehouse: warehouse, user: user)
+      stock_product = StockProduct.new(order: order, warehouse: warehouse, product_model: product_model)
+      
+      expect(stock_product.available?).to eq(true)
+    end
+    
+    it "false if there is a destination" do
+      user = User.create!(name: "Fulano Sicrano", email: "fs@email.com", password: "123456")
+      supplier = Supplier.create!(corporate_name: 'Fornecedor ABC', brand_name: 'ABC', registration_number: '1234567891011', full_address: 'Rua das Flores', city: 'Cidade 1', state: 'AB', email: 'contato@abc.com', phone: '11999999999')
+      product_model = ProductModel.create!(name: "Iphone 11", weight: 194, height: 150, width: 75, depth: 1,sku: "IPHONEABCDEFGHIJKLNM" ,supplier: supplier)
+      warehouse = Warehouse.create!(name: 'Galpão A', code: 'ABC', city: 'Cidade A', area: '1000', address: 'Rua A', cep: '12345678', description: 'Galpão com 1000m²')
+      order = Order.create!(estimated_delivery_date: Date.today.next_day, supplier: supplier, warehouse: warehouse, user: user)
+      stock_product = StockProduct.new(order: order, warehouse: warehouse, product_model: product_model)
+      stock_product_destination = StockProductDestination.new(stock_product: stock_product, recipient: 'João', address: 'Rua das Palmeiras, 123')
+
+      expect(stock_product.available?).to eq(false)
+    end
+  end
 end
