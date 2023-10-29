@@ -7,6 +7,7 @@ class Warehouse < ApplicationRecord
   validates :cep, format: { with: /\A\d{5}-?\d{3}\z/, message: 'formato inválido' }
 
   has_many :stock_products
+  has_many :product_models, through: :stock_products
 
   def full_description
     "#{code} - #{name}"

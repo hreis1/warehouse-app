@@ -4,7 +4,7 @@ class WarehousesController < ApplicationController
 
   def show
     @stocks = @warehouse.stock_products.where.missing(:stock_product_destination).group(:product_model).count
-    @product_models = ProductModel.all
+    @product_models = @warehouse.product_models.group(:name)
   end
 
   def new
